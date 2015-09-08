@@ -13,10 +13,16 @@ var publicPath = path.resolve(__dirname, 'public');
 
 app.use(express.static(publicPath));
 
+app.get('/tasks', function (req, res) {
+  var tasks = require('./server/api/sampleTasks.js')
+  res.send(JSON.stringify(tasks));
+});
+
 
 if (!isProduction) {
   var bundle = require('./bundle.js');
   bundle();
+
   app.all('/build/*', function (req, res) {
     proxy.web(req, res, {
         target: 'http://127.0.0.1:3001'

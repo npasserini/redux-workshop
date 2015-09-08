@@ -3,10 +3,14 @@ import TaskList from './TaskList';
 import AddTaskForm from "./AddTaskForm";
 import TaskStats from "./TaskStats";
 import { Statuses } from "./constants";
-import { createTask, removeTask, setTaskStatus } from "./actions";
+import { fetchTasks, createTask, removeTask, setTaskStatus } from "./actions";
 import { connect } from 'react-redux';
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(fetchTasks());
+  }
+
   render() {
     let { tasksByStatus, dispatch } = this.props;
 

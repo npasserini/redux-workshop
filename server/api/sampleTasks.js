@@ -1,6 +1,6 @@
-import { Statuses } from './constants';
+var Statuses = require('../../src/constants.js').Statuses;
 
-export default [
+module.exports = [
   { name: "Aprender más sobre Redux", status: Statuses.NOT_STARTED },
   { name: "Implementar mi primer FRP app en producción!", status: Statuses.NOT_STARTED },
   { name: "Dictar workshop", status: Statuses.IN_PROGRESS },
