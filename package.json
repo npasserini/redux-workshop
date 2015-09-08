@@ -8,12 +8,13 @@
     "url": "git://github.com/holden-caulfield/redux-workshop.git"
   },
   "scripts": {
-    "start": "webpack-dev-server --port 3000 --progress --inline --hot --devtool eval-source-map"
+    "start": "node server"
   },
   "author": "JP Saraceno <jsarac@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "express": "^4.13.3",
+    "http-proxy": "^1.11.2",
     "react": "^0.13.3",
     "react-markdown-to-html": "^1.0.11",
     "react-redux": "^1.0.1",

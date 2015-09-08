@@ -1,16 +1,21 @@
 var webpack = require('webpack');
 
+var publicPath = 'http://localhost:3001/build';
+
 var config = {
   entry: {
-     app: ['webpack/hot/dev-server', './src/index']
+     app: [
+      'webpack-dev-server/client?http://localhost:3000', 
+      'webpack/hot/dev-server', 
+      './src/index']
   },
   output: {
     filename: '[name].js',
     path: '/build',
-    publicPath: 'http://localhost:3000/build'
+    publicPath: publicPath
   },
   devServer: {
-    publicPath: 'http://localhost:3000/build',
+    publicPath: publicPath,
     inline: true,
     progress: true,
     hot: true,
