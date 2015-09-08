@@ -13,6 +13,7 @@
   "author": "JP Saraceno <jsarac@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.13.3",
     "react": "^0.13.3",
     "react-markdown-to-html": "^1.0.11",
     "react-redux": "^1.0.1",
