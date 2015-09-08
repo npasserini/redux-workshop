@@ -2,18 +2,28 @@ var webpack = require('webpack');
 
 var config = {
   entry: {
-    app: './src/index'
+     app: ['webpack/hot/dev-server', './src/index']
   },
   output: {
     filename: '[name].js',
     path: '/build',
     publicPath: 'http://localhost:3000/build'
   },
+  devServer: {
+    publicPath: 'http://localhost:3000/build',
+    inline: true,
+    progress: true,
+    hot: true,
+    quiet: false,
+    stats: { colors: true },
+    devtool: "#eval-source-map"
+  },
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     loaders: [
