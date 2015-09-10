@@ -33,7 +33,7 @@ var config = {
   module: {
     loaders: [
       { test: /\.jsx?$/, exclude: /node_modules/, loaders: ['babel?stage=0'] },
-      { test: /\.styl$/, loader: 'style/url!file?name=[hash].css!stylus' }
+      { test: /\.scss$/, loader: 'style!css!sass' }
     ]
   }
 };

@@ -1,5 +1,5 @@
 import 'babel-core/polyfill';
-import './styles.styl';
+import './styles.scss';
 import React from 'react';
 import { compose, createStore, combineReducers, applyMiddleware } from 'redux';
 import { devTools, persistState } from 'redux-devtools';
