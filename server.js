@@ -1,8 +1,8 @@
-var express = require('express');
-var path = require('path');
-var httpProxy = require('http-proxy');
-var http = require('http');
-var fs = require('fs');
+import express from 'express';
+import path from 'path';
+import httpProxy from 'http-proxy';
+import http from 'http';
+import fs from 'fs';
 
 var proxy = httpProxy.createProxyServer({
   changeOrigin: true,
@@ -10,8 +10,6 @@ var proxy = httpProxy.createProxyServer({
 }); 
 
 var app = express();
-var isProduction = process.env.NODE_ENV === 'production';
-var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
 
 app.use(express.static(publicPath));
@@ -36,11 +34,9 @@ var walk = function(path) {
 };
 walk(routes_path);
 
-
+var isProduction = process.env.NODE_ENV === 'production';
+var port = isProduction ? process.env.PORT : 3000;
 if (!isProduction) {
-  var bundle = require('./bundle.js');
-  bundle();
-
   app.all('/build/*', function (req, res) {
     proxy.web(req, res, {
         target: 'http://127.0.0.1:3001'
@@ -54,7 +50,7 @@ if (!isProduction) {
 
 
   proxy.on('error', function(e) {
-    // Just catch it
+    console.log(e);
   });
 
   // We need to use basic HTTP service to proxy

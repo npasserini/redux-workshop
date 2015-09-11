@@ -8,7 +8,8 @@
     "url": "git://github.com/holden-caulfield/redux-workshop.git"
   },
   "scripts": {
-    "start": "node server"
+    "start": "webpack-dev-server --port 3001 --progress --inline --hot --devtool eval-source-map",
+    "server": "babel-node server"
   },
   "author": "JP Saraceno <jsarac@gmail.com>",
   "license": "MIT",
