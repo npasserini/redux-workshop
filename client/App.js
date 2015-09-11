@@ -2,7 +2,7 @@ import React from 'react';
 import TaskList from './TaskList';
 import AddTaskForm from "./AddTaskForm";
 import TaskStats from "./TaskStats";
-import { Statuses } from "./constants";
+import { Statuses } from "../shared/constants";
 import { fetchTasks, createTask, removeTask, setTaskStatus } from "./actions";
 import { connect } from 'react-redux';
 

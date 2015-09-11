@@ -2,10 +2,13 @@ var express = require('express');
 var path = require('path');
 var httpProxy = require('http-proxy');
 var http = require('http');
+var fs = require('fs');
+
 var proxy = httpProxy.createProxyServer({
   changeOrigin: true,
   ws: true
 }); 
+
 var app = express();
 var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
@@ -13,10 +16,25 @@ var publicPath = path.resolve(__dirname, 'public');
 
 app.use(express.static(publicPath));
 
-app.get('/tasks', function (req, res) {
-  var tasks = require('./server/api/sampleTasks.js')
-  res.send(JSON.stringify(tasks));
-});
+// Bootstrap routes
+var routes_path = __dirname + '/server/routes';
+var walk = function(path) {
+  fs.readdirSync(path).forEach(function(file) {
+      var newPath = path + '/' + file;
+      var stat = fs.statSync(newPath);
+      if (stat.isFile()) {
+          if (/(.*)\.(js$|coffee$)/.test(file)) {
+              require(newPath)(app);
+          }
+      // We skip the app/routes/middlewares directory as it is meant to be
+      // used and shared by routes as further middlewares and is not a 
+      // route by itself
+      } else if (stat.isDirectory() && file !== 'middlewares') {
+          walk(newPath);
+      }
+  });
+};
+walk(routes_path);
 
 
 if (!isProduction) {

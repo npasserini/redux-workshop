@@ -1,6 +1,6 @@
 import React from 'react';
 import ButtonBar from './ButtonBar';
-import { Statuses } from './constants';
+import { Statuses } from '../shared/constants';
 
 export default class TaskCard extends React.Component {
   render() {

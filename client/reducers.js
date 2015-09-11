@@ -1,5 +1,5 @@
 import { REQUEST_TASKS, RECEIVE_TASKS, CREATE_TASK, REMOVE_TASK, SET_TASK_STATUS } from './actions';
-import { Statuses } from './constants';
+import { Statuses } from '../shared/constants';
 
 export function tasks(state = [], action) {
   switch (action.type) {

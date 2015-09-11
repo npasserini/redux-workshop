@@ -1,4 +1,4 @@
-var Statuses = require('../../src/constants.js').Statuses;
+var Statuses = require('../../shared/constants.js').Statuses;
 
 module.exports = [
   { name: "Aprender más sobre Redux", status: Statuses.NOT_STARTED },
