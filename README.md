@@ -36,6 +36,7 @@ Y luego:
 
 ```
 npm start
+npm run-script server
 ```
 
 Una vez que haya arrancado, podés ver el ejemplo en: http://localhost:3000
@@ -132,6 +133,14 @@ foo => expression
 //multiples parámetros
 (foo, bar) => { code }
 ```
+
+## Base de datos
+Instalar PostreSQL 9.3
+
+```javascript
+sudo apt-get install postgresql postgresql-contrib
+```
+
 
 ## Reconocimientos y material de follow up
 

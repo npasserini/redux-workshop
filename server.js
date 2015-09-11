@@ -4,14 +4,8 @@ import httpProxy from 'http-proxy';
 import http from 'http';
 import fs from 'fs';
 
-var proxy = httpProxy.createProxyServer({
-  changeOrigin: true,
-  ws: true
-}); 
-
 var app = express();
 var publicPath = path.resolve(__dirname, 'public');
-
 app.use(express.static(publicPath));
 
 // Bootstrap routes
@@ -37,21 +31,17 @@ walk(routes_path);
 var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
 if (!isProduction) {
-  app.all('/build/*', function (req, res) {
-    proxy.web(req, res, {
-        target: 'http://127.0.0.1:3001'
-    });
-  });
-  app.all('/socket.io*', function (req, res) {
-    proxy.web(req, res, {
-      target: 'http://127.0.0.1:3001'
-    });
-  });
+  let proxy = httpProxy.createProxyServer({
+    changeOrigin: true,
+    ws: true
+  }); 
 
+  let target = 'http://127.0.0.1:3001';
+  let forward = (req, res) => proxy.web(req, res, { target });
+  app.all('/build/*', forward);
+  app.all('/socket.io*', forward);
 
-  proxy.on('error', function(e) {
-    console.log(e);
-  });
+  proxy.on('error', console.log);
 
   // We need to use basic HTTP service to proxy
   // websocket requests from webpack
@@ -61,16 +51,11 @@ if (!isProduction) {
     proxy.ws(req, socket, head);
   });
 
-  server.listen(port, function () {
-    console.log('Server running on port ' + port);
-  }); 
+  server.listen(port, () => console.log('Server running on port ' + port)); 
 
 } else {
 
   // And run the server
-  app.listen(port, function () {
-    console.log('Server running on port ' + port);
-  });
+  app.listen(port, () => console.log('Server running on port ' + port)); 
 
 }
-
