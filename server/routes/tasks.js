@@ -1,9 +1,9 @@
 // var tasks = require('../api/tasks.js');
+import { all } from '../api/tasks'
 
 module.exports = function (app) {
   app.get('/tasks', function (req, res) {
-    var sampleTasks = require('../api/sampleTasks.js')
-    res.send(JSON.stringify(sampleTasks));
+    all().then(tasks => res.send(JSON.stringify(tasks)));
   });  
 }
 

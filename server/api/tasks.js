@@ -1,11 +1,33 @@
-var pg = require('pg');
-var connectionString = process.env.DATABASE_URL || 
-  'postgres://localhost:5432/todo';
+import Sequelize from 'sequelize'
+import { tasks } from './sampleData'
 
-var client = new pg.Client(connectionString);
-client.connect();
+var sequelize = new Sequelize(
+  'unattended-showing', 
+  'postgres', 
+  'postgres', 
+  {
+    host: 'localhost',
+    dialect: 'postgres',
+    pool: { max: 5, min: 0, idle: 10000 },
+  }
+);
 
-var query = client.query(
-  'CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
+var Task = sequelize.define('task', {
+  name: { type: Sequelize.STRING },
+  status: { type: Sequelize.STRING }
+}, {
+  freezeTableName: true // Model tableName will be the same as the model name
+});
 
-query.on('end', function() { client.end(); });
+Task.sync({force: true}).then(function () {
+  tasks.forEach(task => Task.create(task));
+});
+
+export function all() {
+  return Task.findAll({}).then(function(tasks) {
+    let r = tasks.map(task => task.dataValues)
+    console.log(r);
+    return r;
+  });
+}
+
